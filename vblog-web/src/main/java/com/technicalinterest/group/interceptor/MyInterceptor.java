@@ -32,8 +32,6 @@ public class MyInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private RedisUtil redisUtil;
-	@Autowired
-	private UserMapper userMapper;
 
 	private static final long ACTIVATION_TIME = 60 * 60 * 24;
 

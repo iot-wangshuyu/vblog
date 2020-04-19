@@ -26,7 +26,7 @@ public enum ResultEnum {
 	//系统级异常
 	NO_URL("000101","url不存在!"),
 	METHOD_NOT_ALLOWED("000102","请求方式不支持!"),
-	NET_BLOCK("000103","网络阻塞!"),
+	NET_BLOCK("000103","网络阻塞,请稍后重试！"),
 	SERVER_ERROR("000104","服务器异常"),
 	MEDIATYPE_ERROR("000105","媒体类型不支持!"),
 	FILESIZE_ERROR("000106","文件过大!"),

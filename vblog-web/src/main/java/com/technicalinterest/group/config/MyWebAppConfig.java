@@ -1,10 +1,7 @@
 package com.technicalinterest.group.config;
 
 
-import com.technicalinterest.group.interceptor.IpUrlLimitInterceptor;
-import com.technicalinterest.group.interceptor.MyInterceptor;
-import com.technicalinterest.group.interceptor.RequestHeaderContextInterceptor;
-import com.technicalinterest.group.interceptor.RequestLimitInterceptor;
+import com.technicalinterest.group.interceptor.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +35,10 @@ public class MyWebAppConfig extends WebMvcConfigurerAdapter {
         return new MyInterceptor();
     }
 
+	/**
+	 * 系统总qps限流
+	 * @return
+	 */
 	@Bean
 	HandlerInterceptor getRequestLimitInterceptor(){
 		return new RequestLimitInterceptor();
@@ -48,23 +49,24 @@ public class MyWebAppConfig extends WebMvcConfigurerAdapter {
 		return new RequestHeaderContextInterceptor();
 	}
 
+	/**
+	 * ip+url限流
+	 * @return
+	 */
 	@Bean
-	IpUrlLimitInterceptor getIpUrlLimitInterceptor(){
-    	return new IpUrlLimitInterceptor();
-	}
+	RateLimitInterceptor getRateLimitInterceptor(){ return new RateLimitInterceptor();}
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
     	log.info("profile={}",profile);
         // 多个拦截器组成一个拦截器链
-        // addPathPatterns 用于添加拦截规则
-        // excludePathPatterns 用户排除拦截
+        // addPathPatterns 用于添加拦截规则，excludePathPatterns 用户排除拦截
 //		if (!StringUtils.equals(LOACL_ENV,profile)){
 			registry.addInterceptor(getMyInterceptor()).addPathPatterns("/**");
 //		}
 		registry.addInterceptor(getRequestHeaderContextInterceptor()).addPathPatterns("/**");
 		registry.addInterceptor(getRequestLimitInterceptor()).addPathPatterns("/**");
-//		registry.addInterceptor(getIpUrlLimitInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(getRateLimitInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 

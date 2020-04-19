@@ -22,13 +22,14 @@ import java.io.PrintWriter;
 @Slf4j
 public class RequestLimitInterceptor implements HandlerInterceptor {
 
-    private static final RateLimiter LIMITER = RateLimiter.create(30);
+    private static final RateLimiter rateLimiter = RateLimiter.create(100);
 
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        if (!LIMITER.tryAcquire()) {
-            log.info("请求数量超过网站限流，请求被拦截! ulr={},ip={}",httpServletRequest.getRequestURL().toString(), IpAdrressUtil.getIpAdrress(httpServletRequest));
+
+        if (!rateLimiter.tryAcquire()) {
+            log.info("请求数量超过网站限流，请求被拦截! uri={}, ip={}",httpServletRequest.getRequestURI(), IpAdrressUtil.getIpAdrress(httpServletRequest));
             ApiResult result = new ApiResult(ResultEnum.NET_BLOCK);
             returnJson(httpServletResponse, JSON.toJSONString(result));
             return false;
