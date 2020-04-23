@@ -56,6 +56,12 @@ public class MyWebAppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	RateLimitInterceptor getRateLimitInterceptor(){ return new RateLimitInterceptor();}
 
+	/**
+	 * 防掉链 拦截器
+	 * @return
+	 */
+	RefererInterceptor getRefererInterceptor(){ return new RefererInterceptor();}
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
     	log.info("profile={}",profile);
@@ -63,7 +69,9 @@ public class MyWebAppConfig extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则，excludePathPatterns 用户排除拦截
 //		if (!StringUtils.equals(LOACL_ENV,profile)){
 			registry.addInterceptor(getMyInterceptor()).addPathPatterns("/**");
+
 //		}
+		registry.addInterceptor(getRefererInterceptor()).addPathPatterns("/**");
 		registry.addInterceptor(getRequestHeaderContextInterceptor()).addPathPatterns("/**");
 		registry.addInterceptor(getRequestLimitInterceptor()).addPathPatterns("/**");
 		registry.addInterceptor(getRateLimitInterceptor()).addPathPatterns("/**");
