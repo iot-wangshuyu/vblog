@@ -513,7 +513,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userByUser,result);
         ArticleService articleService= SpringContextUtil.getBean(ArticleServiceImpl.class);
         ReturnClass blogUserInfo = articleService.getBlogInfoByUser(userName);
-        BeanUtils.copyProperties(blogUserInfo,result);
+        BeanUtils.copyProperties(blogUserInfo.getData(),result);
         ReturnClass<String> isFocus=userFocusService.isFocus(loginUser,userName);
         if (isFocus.isSuccess()){
             result.setIsFocus(true);
