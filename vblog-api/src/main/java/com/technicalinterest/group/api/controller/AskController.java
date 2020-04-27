@@ -56,7 +56,7 @@ public class AskController {
     }
 
     @ApiOperation(value = "问题列表")
-    @PostMapping(value = "/list")
+    @GetMapping(value = "/list")
     @BlogOperation(value = "问题列表")
     public ApiResult<PageBean<AskListVO>> getAskList(QueryAskParam queryAskParam) {
         log.info("问题发布 参数{}", JSONObject.toJSON(queryAskParam));

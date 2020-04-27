@@ -47,4 +47,7 @@ public interface AskService {
 
     ReturnClass<List<com.technicalinterest.group.dto.AskDTO>> getTopAskList(String userName,Integer type);
 
+
+
+
 }
