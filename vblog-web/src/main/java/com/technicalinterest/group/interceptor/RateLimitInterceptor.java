@@ -34,7 +34,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 	/**
 	 * 桶的最大容量
 	 */
-	int capacity=1;
+	int capacity=2;
 	/**
 	 * 令牌 的补充量
 	 */
